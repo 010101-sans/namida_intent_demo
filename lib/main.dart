@@ -146,26 +146,32 @@ class _IntentDemoScreenState extends State<IntentDemoScreen> {
   }
 
   Future<void> sendIntentToNamidaSyncWindows() async {
-    if (backupFolder == null || backupFolder!.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please pick a backup folder.')));
-      return;
+    final prefs = await SharedPreferences.getInstance();
+    String? exePath = prefs.getString('namidaSyncExePath');
+    if (exePath == null || !File(exePath).existsSync()) {
+      final result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['exe']);
+      if (result == null || result.files.single.path == null) {
+        // User cancelled
+        return;
+      }
+      exePath = result.files.single.path!;
+      await prefs.setString('namidaSyncExePath', exePath);
+      setState(() {
+        namidaSyncExePath = exePath;
+      });
     }
     final validMusicFolders = musicFolders.where((e) => e != null && e.isNotEmpty).map((e) => e!).toList();
     final musicFoldersStr = validMusicFolders.join(',');
-    final uri = Uri(
-      scheme: 'namidasync',
-      host: 'config',
-      queryParameters: {'backupPath': backupFolder!, 'musicFolders': musicFoldersStr},
-    );
-    final url = uri.toString();
+    final args = [
+      '--backupPath="$backupFolder"',
+      '--musicFolders="$musicFoldersStr"',
+    ];
     try {
-      await launchUrl(uri);
+      await Process.start(exePath!, args);
     } catch (e) {
-      if (namidaSyncExePath != null && File(namidaSyncExePath!).existsSync()) {
-        await Process.start(namidaSyncExePath!, [url]);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Namida Sync path not set. Please pick the exe.')));
-      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Could not launch Namida Sync exe: $e')),
+      );
     }
   }
 

@@ -32,7 +32,6 @@ dependencies:
     sdk: flutter
   file_picker: any
   url_launcher: any
-  android_intent_plus: ^5.3.0
   shared_preferences: any
   path_provider: any
 
