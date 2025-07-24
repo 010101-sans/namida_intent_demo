@@ -31,7 +31,7 @@ This app demonstrates how to reliably pass backup folder and music folder config
 ## Implementation Details
 
 For technical details about the implementation, see:
-- [Intent-Based Config Passing Documentation]()
+- [Intent-Based Config Passing Documentation](https://github.com/010101-sans/namida_sync/blob/main/docs/INTENT_BASED_CONFIG_PASSING.md)
 
 ## Development
 
