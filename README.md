@@ -1,16 +1,42 @@
-# namida_intent_demo
+# Namida Intent Demo
 
-A new Flutter project.
+This demo project serves as a proof of concept to showcase configuration passing between Namida and Namida Sync on Android and Windows platforms and will be integrated directly into Namida. The implementation patterns shown here will be used to enable seamless configuration passing between Namida and Namida Sync.
 
-## Getting Started
+## Overview
 
-This project is a starting point for a Flutter application.
+This app demonstrates how to reliably pass backup folder and music folder configurations from Namida to Namida Sync using:
 
-A few resources to get you started if this is your first Flutter project:
+- **Android:** Platform channels and explicit intents
+- **Windows:** EXE picker and command-line arguments
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Features
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Pick backup folder and music folders
+- Launch Namida Sync with the selected configuration
+- Store Namida Sync EXE path on Windows
+- Cross-platform support (Android/Windows)
+
+## Usage
+
+### Android
+1. Install both Namida Intent Demo and Namida Sync
+2. Select your backup and music folders paths with Namida Intent Demo
+3. Tap "Go to Namida Sync" to pass the configuration
+
+### Windows
+1. Select your backup and music folders
+2. On first launch, pick the location of `namida_sync.exe`
+3. Click "Go Namida Sync" to pass the configuration
+
+## Implementation Details
+
+For technical details about the implementation, see:
+- [Intent-Based Config Passing Documentation]()
+
+## Development
+
+This app is built with Flutter and demonstrates:
+- Platform channels
+- Android intent handling
+- Windows process management
+- Cross-app communication
